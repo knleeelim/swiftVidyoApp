@@ -22,8 +22,8 @@ UIView* VidyoView;
 BOOL _vidyoClientStarted;
 BOOL didEverGoToBackground;
 
-void setParticipantsLimit()
-{
+-(void) setParticipantsLimit{
+    NSLog(@"something");
 VidyoUint limit = (VidyoUint)0;
 VidyoClientInEventParticipantsLimit event = {0};
 event.maxNumParticipants = limit;

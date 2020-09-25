@@ -47,6 +47,7 @@ class JoinViewController: UIViewController {
         }
         
         task.resume()*/
+        m_lib.setParticipantsLimit()
         m_lib.connect(toRoom: "http://sol.nownnow.com", "dAefhhOhis", "아이폰앱테스트");
         
         
@@ -54,10 +55,14 @@ class JoinViewController: UIViewController {
     
     
     @IBAction func LeaveClicked(_ sender: UIButton) {
-        m_lib.applicationWillTerminate(UIApplication.shared)
         performSegue(withIdentifier: "unwindtoCode", sender: self)
         //dismiss(animated: true, completion: nil)
         //m_lib.leaveRoom();
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        m_lib.applicationWillTerminate(UIApplication.shared)
     }
     
 
