@@ -13,6 +13,9 @@ class JoinViewController: UIViewController {
     @IBOutlet var theView: UIView!
     
     var m_lib = VidyoLibrary()
+    var joinCode : String = "no joinCode";
+    var name: String = "no name";
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +24,9 @@ class JoinViewController: UIViewController {
             m_lib.initializeVidyo(theView);
 
         }
+        print(self.joinCode)
+        print(self.name)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillTerminate(notification:)), name: NSNotification.Name.UIApplicationWillTerminate, object: nil)
 
         // Do any additional setup after loading the view.
     }
@@ -48,7 +54,7 @@ class JoinViewController: UIViewController {
         
         task.resume()*/
         m_lib.setParticipantsLimit()
-        m_lib.connect(toRoom: "http://sol.nownnow.com", "dAefhhOhis", "아이폰앱테스트");
+        m_lib.connect(toRoom: "http://sol.nownnow.com", joinCode, name);
         
         
     }
@@ -62,9 +68,20 @@ class JoinViewController: UIViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        print("disappearing")
         m_lib.applicationWillTerminate(UIApplication.shared)
     }
     
-
+    @objc func applicationWillTerminate(notification: Notification){
+        print("gets terminated completely")
+        if(m_lib.vidyoClientStarted()){
+            m_lib.applicationWillTerminate(UIApplication.shared)
+            
+        }
+    }
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+        print("something deinitted")
+    }
 
 }

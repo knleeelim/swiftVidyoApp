@@ -12,10 +12,26 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var testVariable: String?
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        return true
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        
+        print("it indeed worked")
+        let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        if let items = urlComponents?.queryItems as [NSURLQueryItem]?,
+           (url.scheme == "nownproctor") {
+            if items.first?.name == "code",
+               let code = items.first?.value{
+                print(code)
+                testVariable = code
+            }
+        }
         return true
     }
 
