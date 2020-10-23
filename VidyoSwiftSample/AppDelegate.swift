@@ -12,24 +12,70 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var testVariable: String?
+    var isLaunchedURLScheme: Bool = false
+    var joinCode: String = ""
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        window =  UIWindow(frame: UIScreen.main.bounds)
+        window?.makeKeyAndVisible()
+        
+
+        let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
+
+        if launchedBefore  {
+            //Not the first time, show login screen.
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let rootController = storyboard.instantiateViewController(withIdentifier: "enterCode")
+
+            if let window = self.window {
+                window.rootViewController = rootController
+            }
+
+        }
+        else {
+            UserDefaults.standard.set(true, forKey: "launchedBefore")
+            //First time, open a new page view controller.
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let rootController = storyboard.instantiateViewController(withIdentifier: "enterCode")
+
+            if let window = self.window {
+                window.rootViewController = rootController
+            }
+        }
+        
         return true
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         
-        print("it indeed worked")
+        print("Launched from URL scheme")
         let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
         if let items = urlComponents?.queryItems as [NSURLQueryItem]?,
            (url.scheme == "nownproctor") {
             if items.first?.name == "code",
                let code = items.first?.value{
-                print(code)
-                testVariable = code
+                print("URL domain is nownproctor and query key is code for which value is " + code)
+                guard let rootViewController = self.window?.rootViewController as? UINavigationController else{
+                    isLaunchedURLScheme = true
+                    joinCode = code
+                    return true
+                }
+                guard let viewController = rootViewController.viewControllers.last as? ViewController else{
+                    guard let viewController = rootViewController.viewControllers.last as? JoinViewController else {
+                        isLaunchedURLScheme = true
+                        joinCode = code
+                        return true
+                    }
+                    print("if JoinView is already opened, it should call this")
+                    return true
+                }
+                print ("print viewcontroller is" + rootViewController.viewControllers.last!.description)
+                //isLaunchedURLScheme = true
+                joinCode = code
+                viewController.verifyCode(code: code)
             }
         }
         return true

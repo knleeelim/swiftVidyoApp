@@ -12,6 +12,7 @@ class JoinViewController: UIViewController {
     
     @IBOutlet var theView: UIView!
     
+    @IBOutlet weak var nameText: UILabel!
     var m_lib = VidyoLibrary()
     var joinCode : String = "no joinCode";
     var name: String = "no name";
@@ -26,6 +27,7 @@ class JoinViewController: UIViewController {
         }
         print(self.joinCode)
         print(self.name)
+        nameText.text = "\(name)님\n 방에 입장해주세요"
         NotificationCenter.default.addObserver(self, selector: #selector(applicationWillTerminate(notification:)), name: NSNotification.Name.UIApplicationWillTerminate, object: nil)
 
         // Do any additional setup after loading the view.
