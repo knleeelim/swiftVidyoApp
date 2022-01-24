@@ -95,6 +95,16 @@
             </objects>
             <point key="canvasLocation" x="1055.2" y="123.68815592203899"/>
         </scene>
+        <!--Page View Controller-->
+        <scene sceneID="f32-HD-BaD">
+            <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="diD-DW-dTH" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="ima-dM-wC2"/>
+                </pageViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="33G-xu-oDu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="543" y="873"/>
+        </scene>
         <!--Join View Controller-->
         <scene sceneID="4P4-Qx-M2e">
             <objects>
@@ -205,6 +215,7 @@
                     <nil name="viewControllers"/>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="7Fv-fC-AGN"/>
+                        <segue destination="diD-DW-dTH" kind="show" id="CG9-yc-Hlx"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iMJ-56-hxn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
